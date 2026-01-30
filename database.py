@@ -3,9 +3,9 @@ import sqlite3
 DB_NAME = "tasks.db"
 
 
-# ============================
+
 # INICIALIZAR BASE DE DATOS
-# ============================
+
 def init_db():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -22,9 +22,9 @@ def init_db():
     conn.close()
 
 
-# ============================
+
 # AGREGAR TAREA
-# ============================
+
 def add_task(user_id, task):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -38,9 +38,9 @@ def add_task(user_id, task):
     conn.close()
 
 
-# ============================
-# OBTENER TAREAS POR USUARIO
-# ============================
+
+# OBTENER TAREAS POR USUARIO UNICO
+
 def get_tasks(user_id):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -56,9 +56,9 @@ def get_tasks(user_id):
     return tasks
 
 
-# ============================
+
 # ELIMINAR TAREA
-# ============================
+
 def delete_task(user_id, task_id):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -72,9 +72,9 @@ def delete_task(user_id, task_id):
     conn.close()
 
 
-# ============================
+
 # EDITAR TAREA
-# ============================
+
 def update_task(user_id, task_id, new_text):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()

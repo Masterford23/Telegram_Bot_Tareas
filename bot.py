@@ -19,13 +19,11 @@ from telegram.ext import (
     filters
 )
 
-# Imports de módulos locales
+
 import database
 from openia import preguntar_gpt
 
-# ============================
-# CONFIGURACIÓN
-# ============================
+
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
@@ -37,29 +35,23 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("telegram.ext").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
-# Estados de la conversación
 ADD_TASK, DELETE_TASK, EDIT_TASK_ID, EDIT_TASK_TEXT = range(4)
 
-# Callbacks
 CB_ADD = "add"
 CB_LIST = "list"
 CB_EDIT = "edit"
 CB_DELETE = "delete"
 CB_ORDER = "order"
 
-# ============================
-# UTILIDADES
-# ============================
+
 async def run_sync(func, *args):
     """Ejecuta funciones bloqueantes sin congelar el bot."""
     loop = asyncio.get_running_loop()
     return await loop.run_in_executor(None, func, *args)
 
-# ============================
-# MENÚ PROFESIONAL
-# ============================
+
 def menu_principal():
-    # Estilo compacto: iconos únicos y funcionales
+   
     keyboard = [
         [InlineKeyboardButton("✨ Nueva Tarea", callback_data=CB_ADD)],
         [
@@ -73,9 +65,7 @@ def menu_principal():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# ============================
-# HANDLERS PRINCIPALES
-# ============================
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "**Gestor de Tareas**\nSeleccione una acción para comenzar:",
@@ -161,9 +151,9 @@ async def botones_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.message.reply_text("Error en el sistema.")
         return ConversationHandler.END
 
-# ============================
-# LÓGICA DE FLUJO (ADD/EDIT/DEL)
-# ============================
+
+# LÓGICA DE CRUD
+
 async def guardar_tarea(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
     try:
@@ -221,9 +211,9 @@ async def guardar_edicion(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Menú principal:", reply_markup=menu_principal())
     return ConversationHandler.END
 
-# ============================
-# PUNTO DE ENTRADA
-# ============================
+
+# MAIN
+
 def main():
     if not BOT_TOKEN:
         logger.critical("Falta BOT_TOKEN")
